@@ -4,7 +4,6 @@ import { Formik } from 'formik';
 import { Picker } from '@react-native-community/picker';
 import AsyncStorage from '@react-native-community/async-storage';
 
-
 export default CatalogForm = ({DataList,setDataList,setModelOpen}) => {
 
     const storeData = async (value) => {
@@ -37,6 +36,7 @@ export default CatalogForm = ({DataList,setDataList,setModelOpen}) => {
       }
     return (
         <>
+
             <View>
                 <Formik initialValues={{ Name: "", Price: "", PricingOption: "per kg" }} onSubmit={(values) => {HandleCatalogInput(values) }} >
                     {Fomrikprops => (
@@ -47,6 +47,7 @@ export default CatalogForm = ({DataList,setDataList,setModelOpen}) => {
                                 style={styles.textInput}>
 
                             </TextInput>
+
                             <TextInput placeholder='Insert Price'
                                 keyboardType="numeric"
                                 onChangeText={Fomrikprops.handleChange('Price')}
@@ -54,6 +55,7 @@ export default CatalogForm = ({DataList,setDataList,setModelOpen}) => {
                                 style={styles.textInput}>
 
                             </TextInput>
+
                             <Picker selectedValue={Fomrikprops.values.PricingOption}
                                 style={{ marginBottom: 10 }}
                                 mode='dropdown'
@@ -62,10 +64,12 @@ export default CatalogForm = ({DataList,setDataList,setModelOpen}) => {
                                 <Picker.Item label="per kg" value="per kg" />
                                 <Picker.Item label="per gm" value="per gm" />
                             </Picker>
+
                             <View style={{ width: 100, marginTop: 10, alignSelf: 'center' }}>
                                 <Button title='Add Item' onPress={Fomrikprops.handleSubmit}></Button>
 
                             </View>
+                            
                         </View>
 
                     )}

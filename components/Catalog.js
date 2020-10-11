@@ -6,7 +6,6 @@ import {
   Text,
   StatusBar, Modal
 } from 'react-native';
-
 import { Appbar, Card } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/Ionicons';
 import AsyncStorage from '@react-native-community/async-storage';
@@ -55,38 +54,34 @@ export default Catalog = ({ navigation }) => {
   return (
 
     <>
+
       <View style={{ flex: 1 }}>
         <View >
           <StatusBar backgroundColor={'#0080ff'} barStyle="dark-content" />
           <Appbar.Header style={{ backgroundColor: '#0080ff' }}>
-            <View style={{ flex: 1, flexDirection: "row", justifyContent: "space-between" }}>
+            <View style={styles.AppbarView}>
               <Icon name="ios-menu-outline" size={30} color={'#ffffff'} onPress={() => { navigation.toggleDrawer() }} />
-              <Text style={{ fontSize: 18, fontWeight: "bold", color: "#fff" }}> Catalog  </Text>
+              <Text style={styles.AppbarText}> Catalog  </Text>
               <Icon name="ios-add" size={30} color={'#ffffff'} style={{ marginRight: 5 }} onPress={() => { setModelOpen(true) }} />
-
             </View>
-
           </Appbar.Header>
         </View>
 
-
         {
-          DataList.length === 0 && <View style={{ flex: 1, alignSelf: 'center', justifyContent: 'center', flexDirection: 'column' }}>
-            <Text style={{ fontStyle: 'italic', color: "#121212" }}>Tap on the <Icon name="ios-add" size={30} color={'blue'} /> icon above to add items to your Catalog  </Text>
+          DataList.length === 0 && <View style={styles.addCatalogPrompt}>
+            <Text style={styles.AddCatalogDataReminderText}>Tap on the <Icon name="ios-add" size={30} color={'blue'} /> icon above to add items to your Catalog  </Text>
           </View>
         }
 
-        <View style={{ flex: 1, flexDirection: "row", justifyContent: "space-around" }}>
+        <View style={styles.CatalogContainer}>
           <ScrollView >
             <View>
 
               {
 
-
                 DataList.map((x, i) => {
 
-
-                  return (<View key={i} style={{ flex: 1, flexDirection: "column", margin: 10, marginBottom: 2 }}>
+                  return (<View key={i} style={styles.CatalogCard}>
                     <Card>
                       <Card.Title title={x.Name}
                         subtitle={<View><Text style={{ color: '#696969' }}>{`${x.Price} ${x.PricingOption}  `}</Text></View>}
@@ -103,7 +98,7 @@ export default Catalog = ({ navigation }) => {
 
               <View style={styles.modal} >
 
-                <Icon name="ios-close" size={30} color="#900" onPress={() => { setModelOpen(false) }} style={{ flex: 0, flexDirection: 'row', alignSelf: 'center', marginBottom: 10 }} />
+                <Icon name="ios-close" size={30} color="#900" onPress={() => { setModelOpen(false) }} style={styles.ModalCloseButton} />
 
                 <CatalogForm DataList={DataList} setDataList={setDataList} setModelOpen={setModelOpen}></CatalogForm>
 
@@ -129,7 +124,6 @@ export default Catalog = ({ navigation }) => {
 
 const styles = StyleSheet.create({
   bottomView: {
-
     width: '100%',
     height: 50,
     backgroundColor: '#FF9800',
@@ -138,12 +132,54 @@ const styles = StyleSheet.create({
     position: 'absolute',
     bottom: 0
   },
-  modal: {
 
+  modal: {
     justifyContent: 'center',
     marginTop: 25,
+  },
 
+  addCatalogPrompt: {
+    flex: 1,
+    alignSelf: 'center',
+    justifyContent: 'center',
+    flexDirection: 'column'
+  },
 
+  AppbarView: {
+    flex: 1,
+    flexDirection: "row",
+    justifyContent: "space-between"
+  },
+
+  AppbarText: {
+    fontSize: 18,
+    fontWeight: "bold",
+    color: "#fff"
+  },
+
+  AddCatalogDataReminderText: {
+    fontStyle: 'italic',
+    color: "#121212"
+  },
+
+  CatalogContainer: {
+    flex: 1,
+    flexDirection: "row",
+    justifyContent: "space-around"
+  },
+
+  CatalogCard: {
+    flex: 1,
+    flexDirection: "column",
+    margin: 10,
+    marginBottom: 2
+  },
+
+  ModalCloseButton: {
+    flex: 0,
+    flexDirection: 'row',
+    alignSelf: 'center',
+    marginBottom: 10
   }
 
 });

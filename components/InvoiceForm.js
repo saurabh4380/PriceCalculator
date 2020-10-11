@@ -4,7 +4,6 @@ import { Formik } from 'formik';
 import { Picker } from '@react-native-community/picker';
 import AsyncStorage from '@react-native-community/async-storage';
 
-
 let InvoiceForm = ({ setModelOpen, calculatePrice }) => {
     let [PickerValues, setPickerValues] = useState([]);
     let retrieveData = async () => {
@@ -17,8 +16,6 @@ let InvoiceForm = ({ setModelOpen, calculatePrice }) => {
         } catch (e) {
             console.log(e);
         }
-
-
     };
 
     useEffect(() => {
@@ -37,13 +34,7 @@ let InvoiceForm = ({ setModelOpen, calculatePrice }) => {
             calculatePrice(values)
         }
 
-
     }
-
-
-
-
-
 
     return (
         <>
@@ -69,8 +60,6 @@ let InvoiceForm = ({ setModelOpen, calculatePrice }) => {
 
                                 </TextInput>
 
-
-
                                 <Picker selectedValue={Fomrikprops.values.Unit}
                                     style={{ marginBottom: 10 }}
                                     mode='dropdown'
@@ -79,6 +68,7 @@ let InvoiceForm = ({ setModelOpen, calculatePrice }) => {
                                     <Picker.Item label="gm" value="gm" />
                                     <Picker.Item label="kg" value="kg" />
                                 </Picker>
+
                                 <View style={{ width: 100, margin: 10, alignSelf: 'center' }}>
                                     <Button title="Add item" onPress={Fomrikprops.handleSubmit}></Button>
 

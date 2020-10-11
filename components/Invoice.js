@@ -13,11 +13,6 @@ import InvoiceForm from './InvoiceForm';
 import { useIsFocused } from "@react-navigation/native";
 import { useFocusEffect } from '@react-navigation/native';
 
-
-
-
-
-
 export default Invoice = ({ navigation }) => {
 
     let [InvoiceList, setInvoiceList] = useState([]);
@@ -39,25 +34,15 @@ export default Invoice = ({ navigation }) => {
             console.log(e);
         }
 
-
-
     };
-
-
 
     useEffect(() => {
         retrieveData();
-
-
-
-
     }, [])
 
     useFocusEffect(
         React.useCallback(() => {
             const unsubscribe = retrieveData();
-
-
         }, [])
     );
 
@@ -72,11 +57,11 @@ export default Invoice = ({ navigation }) => {
         let Name = values.Item;
         let Quantity = values.Quantity;
         let Unit = values.Unit;
-        
+
         let CatalogData = await AsyncStorage.getItem('8080')
         let temp = await JSON.parse(CatalogData);
-//Fix for a bug which doesn't displays Price for the First element in Catalog
-        if(Name === ""){
+        //Fix for a bug which doesn't displays Price for the First element in Catalog
+        if (Name === "") {
             Name = temp[0].Name;
         }
 
@@ -101,10 +86,7 @@ export default Invoice = ({ navigation }) => {
         let FinalPrice = Math.round(Quantity * Cost);
         const obj = { "Name": Name, "Quantity": `${QuantityCopy}${Unit}`, "Price": FinalPrice };
 
-
         setInvoiceList([...InvoiceList, obj])
-
-
 
     }
 
@@ -126,43 +108,39 @@ export default Invoice = ({ navigation }) => {
 
     }
 
-
-
     return (
         <>
-
 
             <View style={{ flex: 1, }}>
                 <View>
                     <StatusBar backgroundColor={'#0080ff'} barStyle='light-content' />
                     <Appbar.Header style={{ backgroundColor: '#0080ff' }}>
-                        <View style={{ flex: 1, flexDirection: "row", justifyContent: "space-between" }}>
+
+                        <View style={styles.AppbarView}>
                             <Icon name="ios-menu-outline" size={30} color={'#ffffff'} onPress={() => { navigation.toggleDrawer() }} />
-                            <Text style={{ fontSize: 18, fontWeight: "bold", color: "#fff" }}>Invoice  </Text>
+                            <Text style={styles.AppbarText}>Invoice  </Text>
                             <Icon name="ios-add" size={30} color={'#ffffff'} style={{ marginRight: 5 }} onPress={() => { OpenModal() }} />
 
                         </View>
 
-
                     </Appbar.Header>
                 </View>
+
                 {CatalogDataCount.length === 0 &&
-                    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', flexDirection: 'column' }}>
+                    <View style={styles.CatalogNavigator}>
                         <Text>Please add items to you Catalog  </Text>
-                        <Button color={'white'} style={{ backgroundColor: '#0080ff', margin: 10 }} onPress={() => { navigation.navigate('Catalog  ') }}>Go to Catalog</Button>
+                        <Button color={'white'} style={styles.CatalogButton} onPress={() => { navigation.navigate('Catalog  ') }}>Go to Catalog</Button>
                     </View>
                 }
 
                 <ScrollView>
+
                     {InvoiceList.map((x, i) => {
-                        return (<View key={i} style={{ flex: 1, flexDirection: 'column', margin: 8, }}>
+                        return (<View key={i} style={styles.InvoiceListDisplay}>
                             <Card >
                                 <Card.Title title={x.Name}
                                     subtitle={<View><Text style={{ color: '#696969' }}>{`${x.Quantity}  `}</Text></View>}
-                                    right={(props) => <Text style={{ fontWeight: 'bold', color: 'green', fontSize: 22, marginRight: 5 }}>{`र. ${x.Price}  `}</Text>}
-
-
-
+                                    right={(props) => <Text style={styles.PriceInInvoiceList}>{`र. ${x.Price}  `}</Text>}
                                 />
                                 <Card.Actions style={{ margin: -10 }}>
                                     <Button onPress={() => { removeItem(x) }}>Delete</Button>
@@ -170,37 +148,33 @@ export default Invoice = ({ navigation }) => {
                             </Card>
                         </View>)
                     })}
+
                 </ScrollView>
-
-
-
-
 
                 <Modal transparent={true} visible={modelOpen} animationType="slide">
                     <View style={styles.modal} >
-                        <Card style={{ margin: 10, elevation: 10 }}>
-                            <Icon name="ios-close" size={30} color="#900" onPress={() => { setModelOpen(false) }} style={{ flex: 0, flexDirection: 'row', alignSelf: 'center', marginTop: 10, marginBottom: 10 }} />
+
+                        <Card style={styles.ModalCard}>
+                            <Icon name="ios-close" size={30} color="#900" onPress={() => { setModelOpen(false) }} style={styles.ModalCloseButton} />
                             <InvoiceForm setModelOpen={setModelOpen} calculatePrice={calculatePrice}></InvoiceForm>
 
                         </Card>
-
-
 
                     </View>
 
                 </Modal>
             </View>
+
             { CatalogDataCount.length > 0 &&
                 < Surface style={styles.fab}>
                     <Icon name="md-refresh-sharp" size={30} color="red" style={{ marginRight: 10 }} onPress={() => { setInvoiceList([]) }} />
 
                     <View style={{ flex: 0.4, flexDirection: 'row', }}>
-                        <Text style={{ fontSize: 18, fontWeight: "bold", color: "#fff" }}>Total Price  </Text>
+                        <Text style={styles.TotalPriceText}>Total Price  </Text>
                         <Icon name="arrow-forward" size={25} style={{ marginLeft: 10 }} color={'#fff'} />
-
                     </View>
                     <View>
-                        <Text style={{ fontSize: 18, fontWeight: "bold", color: "#fff" }}>
+                        <Text style={styles.TotalPriceValue}>
                             {`र. ${calculateTotalPrice()}  `}
                         </Text>
                     </View>
@@ -221,16 +195,74 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'space-between',
         elevation: 4,
-        //bottom: 2,
         backgroundColor: "#BE90D4",
-
     },
-    modal: {
 
+    modal: {
         justifyContent: 'center',
         marginTop: '10%',
+    },
 
+    AppbarView: {
+        flex: 1,
+        flexDirection: "row",
+        justifyContent: "space-between"
+    },
 
+    AppbarText: {
+        fontSize: 18,
+        fontWeight: "bold",
+        color: "#fff"
+    },
 
+    CatalogNavigator: {
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center',
+        flexDirection: 'column'
+    },
+
+    CatalogButton: {
+        backgroundColor: '#0080ff',
+        margin: 10
+    },
+
+    InvoiceListDisplay: {
+        flex: 1,
+        flexDirection: 'column',
+        margin: 8,
+    },
+
+    PriceInInvoiceList: {
+        fontWeight: 'bold',
+        color: 'green',
+        fontSize: 22,
+        marginRight: 5
+    },
+
+    ModalCloseButton: {
+        flex: 0,
+        flexDirection: 'row',
+        alignSelf: 'center',
+        marginTop: 10,
+        marginBottom: 10
+    },
+
+    ModalCard: {
+        margin: 10,
+        elevation: 10
+    },
+
+    TotalPriceText: {
+        fontSize: 18,
+        fontWeight: "bold",
+        color: "#fff"
+    },
+
+    TotalPriceValue: {
+        fontSize: 18,
+        fontWeight: "bold",
+        color: "#fff"
     }
+
 })
