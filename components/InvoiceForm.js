@@ -43,34 +43,34 @@ let InvoiceForm = ({ setModelOpen, calculatePrice }) => {
                 {
                     PickerValues.length !== 0 &&
                     <Formik initialValues={{Item: "",Quantity: "",Unit: "gm"}} onSubmit={(values) => { HandleInvoiceSubmit(values) }} >
-                        {Formikprops => (
+                        {Fomrikprops => (
                             <View>
-                                <Picker selectedValue={Formikprops.values.Item}
+                                <Picker selectedValue={Fomrikprops.values.Item}
                                     mode='dropdown'
                                     style={styles.picker}
-                                    onValueChange={Formikprops.handleChange('Item')}>
+                                    onValueChange={Fomrikprops.handleChange('Item')}>
                                     {PickerValues.map((x, i) => { return (<Picker.Item label={x.Name} value={x.Name} key={i} />) })}
                                 </Picker>
 
                                 <TextInput placeholder='Insert Quantity'
                                     keyboardType="numeric"
-                                    onChangeText={Formikprops.handleChange("Quantity")}
-                                    value={Formikprops.values.Quantity}
+                                    onChangeText={Fomrikprops.handleChange("Quantity")}
+                                    value={Fomrikprops.values.Quantity}
                                     style={styles.textInput}>
 
                                 </TextInput>
 
-                                <Picker selectedValue={Formikprops.values.Unit}
+                                <Picker selectedValue={Fomrikprops.values.Unit}
                                     style={{ marginBottom: 10 }}
                                     mode='dropdown'
                                     style={styles.picker}
-                                    onValueChange={Formikprops.handleChange("Unit")}>
+                                    onValueChange={Fomrikprops.handleChange("Unit")}>
                                     <Picker.Item label="gm" value="gm" />
                                     <Picker.Item label="kg" value="kg" />
                                 </Picker>
 
                                 <View style={{ width: 100, margin: 10, alignSelf: 'center' }}>
-                                    <Button title="Add item" onPress={Formikprops.handleSubmit}></Button>
+                                    <Button title="Add item" onPress={Fomrikprops.handleSubmit}></Button>
 
                                 </View>
                             </View>
