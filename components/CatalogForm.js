@@ -39,34 +39,34 @@ export default CatalogForm = ({DataList,setDataList,setModelOpen}) => {
 
             <View>
                 <Formik initialValues={{ Name: "", Price: "", PricingOption: "per kg" }} onSubmit={(values) => {HandleCatalogInput(values) }} >
-                    {Fomrikprops => (
+                    {Formikprops => (
                         <View>
                             <TextInput placeholder='Insert Name'
-                                onChangeText={Fomrikprops.handleChange('Name')}
-                                value={Fomrikprops.values.Name}
+                                onChangeText={Formikprops.handleChange('Name')}
+                                value={Formikprops.values.Name}
                                 style={styles.textInput}>
 
                             </TextInput>
 
                             <TextInput placeholder='Insert Price'
                                 keyboardType="numeric"
-                                onChangeText={Fomrikprops.handleChange('Price')}
-                                value={Fomrikprops.values.Price}
+                                onChangeText={Formikprops.handleChange('Price')}
+                                value={Formikprops.values.Price}
                                 style={styles.textInput}>
 
                             </TextInput>
 
-                            <Picker selectedValue={Fomrikprops.values.PricingOption}
+                            <Picker selectedValue={Formikprops.values.PricingOption}
                                 style={{ marginBottom: 10 }}
                                 mode='dropdown'
                                 style={styles.picker}
-                                onValueChange={Fomrikprops.handleChange('PricingOption')}>
+                                onValueChange={Formikprops.handleChange('PricingOption')}>
                                 <Picker.Item label="per kg" value="per kg" />
                                 <Picker.Item label="per gm" value="per gm" />
                             </Picker>
 
                             <View style={{ width: 100, marginTop: 10, alignSelf: 'center' }}>
-                                <Button title='Add Item' onPress={Fomrikprops.handleSubmit}></Button>
+                                <Button title='Add Item' onPress={Formikprops.handleSubmit}></Button>
 
                             </View>
                             
